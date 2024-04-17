@@ -1,3 +1,4 @@
+'use client'
 import {
   getColorList,
   getManufacturerList,
@@ -6,35 +7,20 @@ import {
 import { uploadDevice } from './actions'
 import { useFormState } from 'react-dom'
 import FormButton from '../Button'
-import {
-  DeviceInsertSelectColor,
-  DeviceInsertSelectManuFacture,
-  DeviceInsertSelectType,
-} from './DeviceInsertInput'
 
 type NameList = {
   name: string
 }
 
-export default async function DeviceInsertForm() {
-  const manufacturerList: NameList[] = await getManufacturerList()
-  const colorList: NameList[] = await getColorList()
-  const typeList: NameList[] = await getTypeList()
-
-  //   const handleSubmit = async (event: any) => {
-  //     event.preventDefault()
-  //     const formData = new FormData(event.currentTarget)
-  //     try {
-  //       const result = await uploadDevice(undefined, formData)
-  //       console.log(result)
-  //     } catch (error) {
-  //       console.error('Error uploading device:', error)
-  //     }
-  //   }
+export default function DeviceInsertForm() {
+  //   const manufacturerList: NameList[] = await getManufacturerList()
+  //   const colorList: NameList[] = await getColorList()
+  //   const typeList: NameList[] = await getTypeList()
+  const [state, action] = useFormState(uploadDevice, null)
 
   return (
     <div className='flex mx-auto'>
-      <form className='flex mx-auto'>
+      <form action={action} className='flex mx-auto'>
         <div className='pb-12'>
           <h2 className='text-base font-semibold leading-7 text-gray-900 text-center'>
             Device Information
@@ -52,7 +38,7 @@ export default async function DeviceInsertForm() {
                 Manufacturer
               </label>
               <div className='mt-2'>
-                <select
+                {/* <select
                   name='manufacturer'
                   className='block w-full h-9 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-2 ring-gray-200 placeholder:text-neutral-400 focus:ring-4 focus:ring-amber-500 sm:text-sm sm:leading-6'
                 >
@@ -61,10 +47,16 @@ export default async function DeviceInsertForm() {
                       {manufacturer.name}
                     </option>
                   ))}
-                </select>
+                </select> */}
+
+                <input
+                  type='text'
+                  name='manufacturer'
+                  id='manufacturer'
+                  className='block w-full rounded-md border-0 py-1.5 focus:outline-none ring-2 focus:ring-4 transition ring-gray-200 focus:ring-amber-500 border-none placeholder:text-neutral-400 sm:text-sm sm:leading-6'
+                />
               </div>
             </div>
-            {/* <DeviceInsertSelectManuFacture /> */}
 
             <div className='sm:col-span-3'>
               <label
@@ -74,7 +66,7 @@ export default async function DeviceInsertForm() {
                 Color
               </label>
               <div className='mt-2'>
-                <select
+                {/* <select
                   name='color'
                   className='block w-full h-9 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-2 ring-gray-200 placeholder:text-neutral-400 focus:ring-4 focus:ring-amber-500 sm:text-sm sm:leading-6'
                 >
@@ -83,10 +75,15 @@ export default async function DeviceInsertForm() {
                       {color.name}
                     </option>
                   ))}
-                </select>
+                </select> */}
+                <input
+                  type='text'
+                  name='color'
+                  id='color'
+                  className='block w-full rounded-md border-0 py-1.5 focus:outline-none ring-2 focus:ring-4 transition ring-gray-200 focus:ring-amber-500 border-none placeholder:text-neutral-400 sm:text-sm sm:leading-6'
+                />
               </div>
             </div>
-            {/* <DeviceInsertSelectColor /> */}
 
             <div className='sm:col-span-3'>
               <label
@@ -96,7 +93,7 @@ export default async function DeviceInsertForm() {
                 Type
               </label>
               <div className='mt-2'>
-                <select
+                {/* <select
                   name='type'
                   className='block w-full h-9 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-2 ring-gray-200 placeholder:text-neutral-400 focus:ring-4 focus:ring-amber-500 sm:text-sm sm:leading-6'
                 >
@@ -105,10 +102,15 @@ export default async function DeviceInsertForm() {
                       {type.name}
                     </option>
                   ))}
-                </select>
+                </select> */}
+                <input
+                  type='text'
+                  name='type'
+                  id='type'
+                  className='block w-full rounded-md border-0 py-1.5 focus:outline-none ring-2 focus:ring-4 transition ring-gray-200 focus:ring-amber-500 border-none placeholder:text-neutral-400 sm:text-sm sm:leading-6'
+                />
               </div>
             </div>
-            {/* <DeviceInsertSelectType /> */}
 
             <div className='sm:col-span-3'>
               <label
@@ -145,10 +147,10 @@ export default async function DeviceInsertForm() {
             </div>
           </div>
           <div className='pt-7'>
-            {/* <FormButton text='Submit' /> */}
-            <button className='bg-amber-400 w-28 rounded-md py-2 hover:bg-amber-300 font-medium'>
+            {/* <button className='bg-amber-400 w-28 rounded-md py-2 hover:bg-amber-300 font-medium'>
               Submit
-            </button>
+            </button> */}
+            <FormButton text='Submit' />
           </div>
         </div>
       </form>

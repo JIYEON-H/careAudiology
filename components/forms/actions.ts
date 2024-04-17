@@ -1,12 +1,13 @@
 'use server'
 
 import db from '@/lib/db'
+import { redirect } from 'next/navigation'
 import { z } from 'zod'
 
 const deviceSchema = z.object({
-  manufacturer: z.string().min(1, { message: 'Manufacturer is required' }),
-  color: z.string().min(1, { message: 'Color is required' }),
-  type: z.string().min(1, { message: 'Type is required' }),
+  manufacturerName: z.string({ required_error: 'Manufacturer is required' }),
+  colorName: z.string({ required_error: 'Color is required' }),
+  typeName: z.string({ required_error: 'Type is required' }),
   model: z.string({ required_error: 'Model is required' }),
   serialNumber: z.string({ required_error: 'Serial number is required' }),
 })
@@ -40,6 +41,7 @@ export async function uploadDevice(_: any, formData: FormData) {
             id: true,
           },
         })
+
         const color = await db.color.findFirst({
           where: {
             name: data.colorName,
@@ -48,6 +50,7 @@ export async function uploadDevice(_: any, formData: FormData) {
             id: true,
           },
         })
+
         const type = await db.type.findFirst({
           where: {
             name: data.typeName,
@@ -71,6 +74,8 @@ export async function uploadDevice(_: any, formData: FormData) {
               stockInDate: data.stockInDate,
             },
           })
+          console.log('Device uploaded:', device)
+          redirect('/inventory')
         }
       }
     } catch (error) {

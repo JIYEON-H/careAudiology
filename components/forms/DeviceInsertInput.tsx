@@ -1,3 +1,5 @@
+//can be deleted
+
 import {
   getColorList,
   getManufacturerList,
