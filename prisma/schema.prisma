@@ -1,0 +1,72 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+ id       Int      @id @default(autoincrement())
+ username String   @unique
+ password String
+}
+
+model ManuFacturer {
+ id       Int       @id @default(autoincrement())
+ name     String
+ devices Device[]
+
+ @@map("manufacturer")
+}
+
+model Color {
+  id      Int        @id @default(autoincrement())
+  name    String
+  devices Device[]
+
+  @@map("color")
+}
+
+model Type {
+  id      Int        @id @default(autoincrement())
+  name    String
+  devices Device[]
+
+  @@map("type")
+}
+
+model Device {
+  id            Int          @id @default(autoincrement())
+  serialNumber  String       @unique
+  manufacturer  ManuFacturer @relation(fields: [manufacturerId], references: [id])
+  manufacturerId Int
+  color Color                @relation(fields: [colorId], references: [id])
+  colorId Int
+  type Type                  @relation(fields: [typeId], references: [id])
+  typeId Int
+  stockInDate DateTime
+  sellDate DateTime?
+  package Package? @relation(fields: [packageId], references: [id])
+  packageId Int?
+  model           String?
+
+  @@map("device")
+}
+
+model Package {
+  id  Int @id @default(autoincrement())
+  devices Device[]
+  clientId Int
+  fittingDate DateTime
+  warrantyExpiration DateTime
+
+  @@map("package")
+}
